@@ -1,0 +1,22 @@
+
+
+
+(Don't forget to use '. $HOME/venv/bin/activate')
+
+--------------------------------------------------
+
+Used this, before creating setup.cfg:
+PYTHONPATH=. pytest backend__products_list/tests/test_products.py -v --cov=backend__products_list --cov-report=term-missing
+
+--------------------------------------------------
+
+curl http://localhost:5000/getdealers/Laptop
+
+	{
+		"dealers": [
+			"GH Computers",
+			"Tech City",
+			"Ez PC"
+		]
+	}
+

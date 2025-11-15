@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  # Flask service for products
+  products_list:
+    build: ./backend__products_list
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend__products_list:/app
+    environment:
+      - RUNNING_MODE=development
+      - FLASK_DEBUG=1  # Enable Flask debug mode
+    restart: unless-stopped
+
+  # Node.js service for dealers
+  dealer_details:
+    build: ./backend__dealer_details
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend__dealer_details:/app
+    environment:
+      - RUNNING_MODE=development  # Added RUNNING_MODE
+    restart: unless-stopped
+
+  # Frontend service
+  dealer_evaluation:
+    build: ./frontend__dealer_evaluation
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./frontend__dealer_evaluation:/app
+    environment:
+      - RUNNING_MODE=development  # Added RUNNING_MODE
+    restart: unless-stopped
