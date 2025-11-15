@@ -136,7 +136,6 @@ curl http://localhost:8080/price/Binglee/Headphones
 }
 ```
 
-
 #### 2. Get All Prices for a Product
 
 **Endpoint:**
@@ -175,6 +174,11 @@ The frontend is a simple web page that allows users to select a product and view
   - Dropdown to select products.
   - Table to display dealer prices.
   - Responsive design for mobile and desktop.
+
+
+### Endpoints Used in the Current Implementation:
+- Product Service: GET /products
+- Dealer Service:  GET /allprice/{product}
 
 ---
 

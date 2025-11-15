@@ -10,13 +10,69 @@ PYTHONPATH=. pytest backend__products_list/tests/test_products.py -v --cov=backe
 
 --------------------------------------------------
 
-curl http://localhost:5000/getdealers/Laptop
+Endpoints that are used in the current implementation:
 
-	{
-		"dealers": [
-			"GH Computers",
-			"Tech City",
-			"Ez PC"
-		]
-	}
+	* Product Service: GET /products
+	* Dealer Service:  GET /allprice/{product}
 
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│                                FRONTEND (Browser)                              │
+└───────────────┬───────────────────────────────┬───────────────────────────────┘
+                │                               │
+                ▼                               ▼
+┌───────────────────────┐               ┌───────────────────────┐
+│   Product Service    │               │    Dealer Service     │
+│                       │               │                       │
+│   Endpoint:           │               │   Endpoint:           │
+│   GET /products       │               │   GET /allprice/{p}   │
+│                       │               │                       │
+│   Response:           │               │   Response:           │
+│   {                   │               │   {                   │
+│     "products": [     │               │     "prices": [       │
+│       {               │               │       {               │
+│         "product":    │               │         "key":        │
+│           "Laptop",   │               │           "Binglee",  │
+│         "Dealers": [  │               │         "value":      │
+│           "GH Computers",             │           "$75"       │
+│           "Tech City"                 │       },              │
+│         ]             │               │       {               │
+│       },              │               │         "key":        │
+│       {               │               │           "DXC Electronics",
+│         "product":    │               │         "value":      │
+│           "Printer",  │               │           "$85"       │
+│         "Dealers": [  │               │       }               │
+│           "Binglee",  │               │     ]                 │
+│           "Bobay"     │               │   }                   │
+│       }               │               │                       │
+│     ]                 │               │                       │
+│   }                   │               │                       │
+└───────────┬───────────┘               └───────────┬───────────┘
+            │                                   │
+            ▼                                   ▼
+┌───────────────────────────────────────────────────────────────┐
+│                        FRONTEND LOGIC                          │
+│                                                               │
+│   1. Calls Product Service to get list of products and        │
+│      their dealers:                                          │
+│      - Renders dropdown for user selection.                   │
+│ (The Dealers array (e.g., ["Binglee", "DXC Electronics"]) 
+│ is ignored and not displayed or processed further.)
+│                                                               │
+│   2. When user selects a product (e.g., "Printer"), calls     │
+│      Dealer Service with the product name:                    │
+│      - GET /allprice/Printer                                 │
+│      - Receives prices from all dealers.                      │
+│                                                               │
+│   3. Combines data to display:                                │
+│      - Product name (from Product Service)                    │
+│      - Dealer names and prices (from Dealer Service)          │
+│                                                               │
+│   4. Renders a table:                                         │
+│      ┌─────────────┬─────────────┐                            │
+│      │   Dealer    │   Price     │                            │
+│      ├─────────────┼─────────────┤                            │
+│      │ Binglee     │ $75         │                            │
+│      │ DXC Electronics │ $85      │                            │
+│      └─────────────┴─────────────┘                            │
+└───────────────────────────────────────────────────────────────┘
