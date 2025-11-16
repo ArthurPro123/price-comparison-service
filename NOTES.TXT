@@ -1,4 +1,57 @@
 
+docker run -d \
+  --name jenkins \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  -v jenkins_home:/var/jenkins_home \
+  jenkins/jenkins:lts
+
+# Remove the container
+docker rm -f jenkins
+
+# Remove the volume (WARNING: This deletes all Jenkins data!)
+docker volume rm jenkins_home
+
+
+
+--------------------------------------------------
+Simple Ansible Example for Infrastructure
+
+Create a file named deploy_infrastructure.yml:
+---
+- name: Deploy infrastructure for microservices
+  hosts: your_server  # Replace with your server IP or hostname
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Pull and run Product Service
+      docker_container:
+        name: product-service
+        image: yourusername/product-service:latest
+        ports: "5000:5000"
+        restart_policy: always
+
+    - name: Pull and run Dealer Service
+      docker_container:
+        name: dealer-service
+        image: yourusername/dealer-service:latest
+        ports: "8080:8080"
+        restart_policy: always
+
+    - name: Pull and run Frontend
+      docker_container:
+        name: frontend
+        image: yourusername/frontend:latest
+        ports: "80:80"  # Assuming frontend runs on port 80
+        restart_policy: always
+--------------------------------------------------
+
+
 
 
 (Don't forget to use '. $HOME/venv/bin/activate')

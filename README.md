@@ -68,6 +68,8 @@ curl http://localhost:5000/products
 }
 ```
 
+---
+
 #### 2. Get Dealers for a Specific Product
 
 **Endpoint:**
@@ -136,6 +138,8 @@ curl http://localhost:8080/price/Binglee/Headphones
 }
 ```
 
+---
+
 #### 2. Get All Prices for a Product
 
 **Endpoint:**
@@ -170,10 +174,10 @@ curl http://localhost:8080/allprice/Printer
 ## Frontend
 The frontend is a simple web page that allows users to select a product and view prices from different dealers. It uses Axios to fetch data from the backend services and displays it in a table.
 
-- **Features**:
-  - Dropdown to select products.
-  - Table to display dealer prices.
-  - Responsive design for mobile and desktop.
+**Features**:
+- Dropdown to select products.
+- Table to display dealer prices.
+- Responsive design for mobile and desktop.
 
 
 ### Endpoints Used in the Current Implementation:
